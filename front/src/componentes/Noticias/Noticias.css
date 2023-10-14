@@ -1,0 +1,22 @@
+.news-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px; /* Espacio entre las noticias */
+    padding: 50px 0;
+  }
+  
+  .news-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  .news-image img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .news-description {
+    margin-top: 10px;
+  }
+    

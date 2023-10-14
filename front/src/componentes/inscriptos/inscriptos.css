@@ -1,0 +1,65 @@
+
+.container {
+    width: 100%;
+    max-width: 800px; /* Ajusta el ancho máximo según tus preferencias */
+    margin: 0 auto;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-size: 24px;
+  }
+  
+  .titulo {
+    color: #007bff;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  /* Ajuste del ancho del select */
+  .form-control {
+    width: 100%;
+    max-width: 100%; /* Ajusta el ancho máximo del select según tus preferencias */
+  }
+  
+  .filtrar-btn {
+    background-color: #28a745;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .filtrar-btn:hover {
+    background-color: #218838;
+  }
+  
+  .separador {
+    border-top: 2px solid #007bff;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para la sección de resultados de estudiantes */
+  #resultadoEstudiantes {
+    list-style: none;
+    padding: 0;
+  }
+  
+  #resultadoEstudiantes li {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #fff;
+  }
+  
+  #resultadoEstudiantes li:hover {
+    background-color: #f0f8ff;
+  }
+  
