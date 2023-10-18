@@ -4,40 +4,41 @@ import HeaderBd from '../HeaderBd/HeaderBd';
 function Matricular() {
     return (
         <>
-        <HeaderBd />
-        <section className="alumnos_bedelia container">
-            <div className="container mt-5">
-                <div className="card">
-                    <div className="card-body">
-                        <h1 className="card-title">Inscripcion Estudiantes a Materias</h1>
-                        <div className="form-group">
-                            <input
-                                type="text"
-                                id="buscador"
-                                className="form-control"
-                                placeholder="Buscar estudiante"
-                            />
+            <HeaderBd />
+            <section className="alumnos_bedelia container">
+                <div>
+                    <div>
+                        <h2>Selecciona un estudiante:</h2>
+                        <select>
+                            <option value="">Selecciona un estudiante</option>
+                            <option value="">Fulanito de tal</option>
+                            <option value="">Juan pindonga</option>
+                        </select>
+                    </div>
+                    <h2>Selecciona una carrera y sus materias:</h2>
+                    <div className='matricular_container'>
+                        
+                        <div>
+                            <h3>Carreras:</h3>
+                            <label>
+                                <input type="checkbox" value="Lic. en sistemas y programación" /> Lic. en sistemas y programación
+                            </label>
                         </div>
-                        <ul id="resultadoBusqueda" className="list-unstyled"></ul>
-
-                        <div id="divCarreras" style={{ display: 'none' }}>
-                            <label htmlFor="selectCarreras">Seleccionar Carrera:</label>
-                            <select id="selectCarreras" className="form-control"></select>
+                        <div>
+                            <h3>Materias:</h3>
+                            <label className='matricular-label'>
+                                <input type="checkbox" value="Matematica 1" /> Matematica 1
+                            </label>
+                            <label className='matricular-label'>
+                                <input type="checkbox" value="Programación 1" /> Programación 1
+                            </label>
+                            <label className='matricular-label'>
+                                <input type="checkbox" value="Programación 2" /> Programación 2
+                            </label>
                         </div>
-
-                        <div id="materiasCarrera" style={{ display: 'none' }}></div>
-
-                        <button id="inscribirBtn" className="btn btn-primary mt-3"> Inscribir Estudiantes </button>
-
-                        <div id="errorEstudiantes" className="mt-3" style={{ display: 'none', color: 'red' }}>Por favor, seleccione un estudiante para continuar.</div>
-
-                        <div id="errorMaterias" className="mt-3" style={{ display: 'none', color: 'red' }}>Por favor, seleccione una materia para continuar.</div>
-
-                        <div id="inscripcionInfo" className="mt-3"></div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
         </>
     );
 }

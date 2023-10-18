@@ -10,19 +10,3 @@ export const obtenerMaterias = async () => {
     }
 }
 
-export const crearMateria = async (nuevaMateria) => {
-    try {
-        const response = await fetch(`${API_URL}/materias/`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(nuevaMateria),
-        });
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error(error);
-    }
-}
-

@@ -915,7 +915,6 @@ nav .menu li a {
   display: flex;
   justify-content: space-between;
   padding: 50px 70px;
-  margin-top: 0!important;
 }
 
 @media (max-width: 768px) {
@@ -1334,11 +1333,6 @@ input[type="number"]::-webkit-inner-spin-button {
   text-align: left;
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
 input {
   width: 100%;
   padding: 10px;
@@ -1390,15 +1384,6 @@ h2 {
   width: 100%;
 }
 
-
-
-label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 5px;
-  margin-left: 15px;
-
-}
 
 .input-group {
   margin-top: 15px;

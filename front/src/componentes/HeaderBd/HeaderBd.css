@@ -139,3 +139,10 @@
 .footer {
   margin-top: 2rem;
 }
+
+.matricular_container{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+}
+

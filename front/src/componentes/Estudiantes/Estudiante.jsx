@@ -21,7 +21,7 @@ function Estudiante() {
 
   const manejarCrearAlumno = async (e) => {
     e.preventDefault();
-
+  
     const nuevoEstudiante = {
       nombre: formRef.current.nombre.value,
       apellido: formRef.current.apellido.value,
@@ -37,45 +37,52 @@ function Estudiante() {
       alert('El DNI no puede ser negativo.');
       return;
     }
-
+  
     try {
       const data = await crearEstudiante(nuevoEstudiante);
       console.log(data);
-
+  
       const estudiantesActualizados = await obtenerEstudiantes();
       setEstudiantes(estudiantesActualizados.dato);
-
+  
       formRef.current.reset();
     } catch (error) {
       console.error(error);
     }
   };
+  
 
   const handleEditarEstudiante = async (e) => {
     e.preventDefault();
-  
+
     if (idEdicion === null) {
       console.error('ID de estudiante no especificado para la edición.');
       return;
     }
-  
+
+    const nacionalidadSeleccionada = formRef.current.nacionalidad.value;
+
+ 
+
+    const estudiante = await obtenerEstudiantes(idEdicion);
+
     const estudianteEditado = {
       nombre: formRef.current.nombre.value,
       apellido: formRef.current.apellido.value,
       dni: formRef.current.dni.value.toString(),
       celular: formRef.current.celular.value,
       fechaNacimiento: formRef.current.fechaNacimiento.value,
-      nacionalidad: formRef.current.nacionalidad.value,
+      nacionalidad: nacionalidadSeleccionada.toString(),
       correoElectronico: formRef.current.correoElectronico.value,
     };
-  
+
     try {
       await editarEstudiante(idEdicion, estudianteEditado);
       console.log('Estudiante actualizado con éxito.');
-  
+
       const estudiantesActualizados = await obtenerEstudiantes();
       setEstudiantes(estudiantesActualizados.dato);
-  
+
       formRef.current.reset();
       setModoEdicion(false);
       setIdEdicion(null);
@@ -95,9 +102,12 @@ function Estudiante() {
     const fechaNacimientoISO = new Date(estudiante.fechaNacimiento).toISOString().split('T')[0];
     formRef.current.fechaNacimiento.value = fechaNacimientoISO;
 
-    formRef.current.nacionalidad.value = estudiante.nacionalidad;
+    // Modificar para establecer "Seleccionar nacionalidad"
+    formRef.current.nacionalidad.value = '';
+
     formRef.current.correoElectronico.value = estudiante.correoElectronico;
   };
+
 
   const busqueda = (e) => {
     const texto = e.target.value.toLowerCase();
@@ -146,19 +156,20 @@ function Estudiante() {
               ref={formRef}
             >
               <div className="form-group">
-                <input type="text" id="inputNombre" className="form-control" placeholder="Nombre" name="nombre" />
-                <input type="text" id="inputApellido" className="form-control" placeholder="Apellido" name="apellido" />
+                <input type="text" id="inputNombre" className="form-control" placeholder="Nombre" name="nombre" required />
+                <input type="text" id="inputApellido" className="form-control" placeholder="Apellido" name="apellido" required />
               </div>
 
               <div className="form-group">
-                <input type="number" id="inputDni" className="form-control" placeholder="DNI" name="dni" />
-                <input type="tel" id="inputCelular" className="form-control" placeholder="Celular" name="celular" />
+                <input type="number" id="inputDni" className="form-control" placeholder="DNI" name="dni" required />
+                <input type="tel" id="inputCelular" className="form-control" placeholder="Celular" name="celular" required />
                 <input
                   type="date"
                   id="inputFecheNacimiento"
                   className="form-control"
                   placeholder="Fecha de nacimiento"
                   name="fechaNacimiento"
+                  required
                 />
               </div>
 
@@ -168,16 +179,24 @@ function Estudiante() {
                   className="form-control"
                   placeholder="Seleccionar nacionalidad"
                   name="nacionalidad"
+                  required
                 >
                   <option value="">Seleccionar nacionalidad</option>
-                  <option value="Argentino">Argentina</option>
-                  <option value="Uruguayo">Uruguay</option>
-                  <option value="Chileno">Chileno</option>
-                  <option value="Paraguayo">Paraguayo</option>
-                  <option value="Brasilero">Brasilero</option>
-                  <option value="Boliviano">Boliviano</option>
+                  <option value="0">Argentina</option>
+                  <option value="1">Uruguay</option>
+                  <option value="2">Chileno</option>
+                  <option value="3">Paraguayo</option>
+                  <option value="4">Brasilero</option>
+                  <option value="5">Boliviano</option>
                 </select>
-                <input type="email" id="inputMail" className="form-control" placeholder="Email" name="correoElectronico" />
+                <input
+                  type="email"
+                  id="inputMail"
+                  className="form-control"
+                  placeholder="Email"
+                  name="correoElectronico"
+                  required
+                />
               </div>
 
               <button type="submit" className="btn btn-primary" id="btnSubir">
@@ -249,4 +268,4 @@ function Estudiante() {
   );
 }
 
-export default Estudiante;
+export default Estudiante; 

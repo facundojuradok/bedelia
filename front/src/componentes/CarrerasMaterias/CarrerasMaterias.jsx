@@ -5,7 +5,7 @@ import {
   eliminarCarrera,
   editarCarrera,
 } from "../../services/carreras"
-import { obtenerMaterias, crearMateria } from "../../services/materias"
+import { obtenerMaterias } from "../../services/materias"
 import HeaderBedelia from "../HeaderBd/HeaderBd"
 
 
@@ -71,6 +71,13 @@ function CarreraMateria() {
   }
 
   const manejarEditar = async (e, carrera) => {
+    console.log("Click al boton editar")
+    console.log("Ejecutamos la funcion manejarEditar")
+    console.log("Nos llega por paramtros la carrera a editar")
+    console.log("Seteamos el estado de estaEditando con la carrera a editar")
+    console.log(
+      "Seteamos el valor del input con el nombre de la carrera usando la referencia al formulario con el hook useRef"
+    )
     setEstaEditando({
       status: true,
       id: carrera.idCarrera,
@@ -91,29 +98,6 @@ function CarreraMateria() {
       setMaterias(materiasObtenidas.dato)
     })
   }, [])
-
-  const agregarMateria = async (e) => {
-    e.preventDefault();
-
-    const nuevaMateria = {
-      nombre: e.target.nombre.value,
-      idCarrera: e.target.carreraPerteneciente.value,
-      horasSemanales: e.target.horasSemanales.value,
-      tipoMateria: e.target.tipoMateria.value,
-    };
-
-    try {
-      // Llama a la función para crear una materia en el servicio.
-      const data = await crearMateria(nuevaMateria);
-      const materias = await obtenerMaterias();
-      setMaterias(materias.dato);
-    } catch (error) {
-      console.error(error);
-    }
-
-    document.getElementById("materiaForm").reset();
-};
-
 
   return (
     <>
@@ -165,11 +149,22 @@ function CarreraMateria() {
 
           <div className="mt-4">
             <h2>Formulario de Materias</h2>
-            <form id="materiaForm" onSubmit={agregarMateria}>
+            <form id="materiaForm">
               <div className="form-group">
-                <input type="text" className="form-control" name="nombre" required />
-                <label htmlFor="carreraPerteneciente">Seleccione la Carrera:</label>
-                <select className="form-control" name="carreraPerteneciente" required>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="nombre"
+                  required
+                />
+                <label htmlFor="carreraPerteneciente">
+                  Seleccione la Carrera:
+                </label>
+                <select
+                  className="form-control"
+                  id="carreraPerteneciente"
+                  required
+                >
                   {carreras.map((carrera) => (
                     <option key={carrera.idCarrera} value={carrera.idCarrera}>
                       {carrera.nombre}
@@ -185,19 +180,24 @@ function CarreraMateria() {
                   name="horasSemanales"
                   required
                 />
-                <select className="form-control" name="tipoMateria" required>
+                <select
+                  className="form-control"
+                  id="descripcion"
+                  name="tipoMateria"
+                  required
+                >
                   <option value="" disabled selected>
-                    Elegí el tipo de materia
+                    Elegí la modalidad
                   </option>
                   <option value="1">Cuatrimestral</option>
                   <option value="2">Anual</option>
                 </select>
               </div>
+
               <button type="submit" className="btn btn-primary">
-                Cargar Materia
+                Guardar Materia
               </button>
             </form>
-
           </div>
 
           <div>
