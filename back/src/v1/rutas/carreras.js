@@ -1,27 +1,30 @@
-const { Router } = require('express');
+const { Router } = require("express")
 const {
-    buscarCarreraPorId,
-    buscarTodasCarreras,
-    eliminarCarrera,
-    crearCarrera,
-    actualizarCarrera
-} = require('../../controladores/carreras');
+  buscarCarreraPorId,
+  buscarTodasCarreras,
+  eliminarCarrera,
+  crearCarrera,
+  actualizarCarrera,
+  obtenerEstudiantesCarrera,
+} = require("../../controladores/carreras")
 
-const router = Router();
+const router = Router()
 
 // Agregar una nueva carrera
-router.post('/carreras', crearCarrera);
+router.post("/carreras", crearCarrera)
 
 // Eliminar una carrera por ID
-router.delete('/carreras/:idCarrera', eliminarCarrera);
+router.delete("/carreras/:idCarrera", eliminarCarrera)
 
 // Actualizar una carrera por ID
-router.put('/carreras/:idCarrera', actualizarCarrera);
+router.put("/carreras/:idCarrera", actualizarCarrera)
 
 // Obtener todas las carreras
-router.get('/carreras', buscarTodasCarreras);
+router.get("/carreras", buscarTodasCarreras)
 
 // Buscar una carrera por ID
-router.get('/carreras/:idCarrera', buscarCarreraPorId);
+router.get("/carreras/:idCarrera", buscarCarreraPorId)
 
-module.exports = router;
+router.get("/carreras/:idCarrera/estudiantes", obtenerEstudiantesCarrera)
+
+module.exports = router
