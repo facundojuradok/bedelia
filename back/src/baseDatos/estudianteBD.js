@@ -1,7 +1,7 @@
-const conexion = require('./conexionBD');
+const conexion = require("./conexionBD")
 
 const buscarPorId = async (idEstudiante) => {
-    const consulta = `
+  const consulta = `
         SELECT idEstudiante, dni, nombre, apellido,
         (CASE
             WHEN nacionalidad = 0 THEN 'Argentino'
@@ -13,14 +13,14 @@ const buscarPorId = async (idEstudiante) => {
             ELSE ''
         END) AS nacionalidad 
         FROM estudiante 
-        WHERE activo = 1 AND idEstudiante = ?`;
+        WHERE activo = 1 AND idEstudiante = ?`
 
-    const [estudiante] = await conexion.query(consulta, idEstudiante);
-    return estudiante;
+  const [estudiante] = await conexion.query(consulta, idEstudiante)
+  return estudiante
 }
 
 const buscarTodos = async () => {
-    const consulta = `
+  const consulta = `
         SELECT idEstudiante, dni, nombre, apellido, fechaNacimiento, nacionalidad, correoElectronico, celular, foto,
         (CASE
             WHEN nacionalidad = 0 THEN 'Argentino'
@@ -32,30 +32,30 @@ const buscarTodos = async () => {
             ELSE ''
         END) AS nacionalidad 
         FROM estudiante 
-        WHERE activo = 1`;
+        WHERE activo = 1`
 
-    const [estudiantes] = await conexion.query(consulta);
-    return estudiantes;
+  const [estudiantes] = await conexion.query(consulta)
+  return estudiantes
 }
 const eliminar = async (idEstudiante) => {
-    const consulta = `UPDATE estudiante SET activo = 0 WHERE idEstudiante = ?`;
-    const [estudiante] = await conexion.query(consulta, idEstudiante);
-    return estudiante;
+  const consulta = `UPDATE estudiante SET activo = 0 WHERE idEstudiante = ?`
+  const [estudiante] = await conexion.query(consulta, idEstudiante)
+  return estudiante
 }
 
 const actualizar = async (idEstudiante, datosActualizados) => {
-    const {
-        dni,
-        nombre,
-        apellido,
-        fechaNacimiento,
-        nacionalidad,
-        correoElectronico,
-        celular,
-        foto
-    } = datosActualizados;
+  const {
+    dni,
+    nombre,
+    apellido,
+    fechaNacimiento,
+    nacionalidad,
+    correoElectronico,
+    celular,
+    foto,
+  } = datosActualizados
 
-    const consulta = `
+  const consulta = `
         UPDATE estudiante
         SET
             dni = ?,
@@ -67,38 +67,63 @@ const actualizar = async (idEstudiante, datosActualizados) => {
             celular = ?,
             foto = ?
             WHERE idEstudiante = ?
-    `;
+    `
 
-    const [resultado] = await conexion.query(consulta, [
-        dni,
-        nombre,
-        apellido,
-        fechaNacimiento,
-        nacionalidad,
-        correoElectronico,
-        celular,
-        foto,
-        idEstudiante
-    ]);
+  const [resultado] = await conexion.query(consulta, [
+    dni,
+    nombre,
+    apellido,
+    fechaNacimiento,
+    nacionalidad,
+    correoElectronico,
+    celular,
+    foto,
+    idEstudiante,
+  ])
 
-    return resultado;
+  return resultado
 }
 
 const nuevo = async (estudiante) => {
+  const consulta = "INSERT INTO estudiante SET ?"
+  const [estudianteNuevo] = await conexion.query(consulta, estudiante)
 
+  // console.log(estudianteNuevo.insertId);
 
-    const consulta = 'INSERT INTO estudiante SET ?';
-    const [estudianteNuevo] = await conexion.query(consulta, estudiante);
+  return estudianteNuevo
+}
 
-    // console.log(estudianteNuevo.insertId);
+// Obtener las carreras de un estudiante por su id
+const obtenerCarrerasEstudiante = async (idEstudiante) => {
+  const consulta = `
+  SELECT c.nombre AS nombreCarrera, e.nombre AS nombreEstudiante, e.apellido AS
+    apellidoEstudiante FROM estudiantecarrera AS ec JOIN carrera AS c ON ec.carrera = c.idCarrera
+    JOIN estudiante AS e ON ec.estudiante = e.idEstudiante
+    WHERE ec.estudiante = ?
+  `
 
-    return estudianteNuevo;
+  const [resultados] = await conexion.query(consulta, idEstudiante)
+
+  return resultados
+}
+
+const obtenerMateriasEstudiante = async (idEstudiante) => {
+  const consulta = `
+  SELECT m.nombre AS nombreMateria, e.nombre AS nombreEstudiante, e.apellido AS 
+  apellidoEstudiante FROM estudiantemateria AS em JOIN materia AS m ON em.materia = m.idMateria
+  JOIN estudiante AS e ON em.estudiante = e.idEstudiante
+  WHERE em.estudiante = ?`
+
+  const [resultados] = await conexion.query(consulta, idEstudiante)
+  return resultados
 }
 
 module.exports = {
-    buscarPorId,
-    buscarTodos,
-    eliminar,
-    actualizar,
-    nuevo,
+  buscarPorId,
+  buscarTodos,
+  eliminar,
+  actualizar,
+  nuevo,
+  obtenerCarrerasEstudiante,
+  obtenerMateriasEstudiante,
 }
