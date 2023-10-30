@@ -29,9 +29,7 @@ function Header() {
         <div className="barra-navegacion">
           <div className="barra-izquierda">
             <Logo />
-            <form>
-              <input className="buscador" type="text" value="" placeholder=" Busca tu carrera..." />
-            </form>
+
           </div>
           <Menu />
         </div>

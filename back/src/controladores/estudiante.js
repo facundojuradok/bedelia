@@ -118,11 +118,39 @@ actualizar = async (req, res) => {
     }
 };
 
+const obtenerCarrerasEstudianteController = async (req, res) => {
+    try {
+        const idEstudiante = req.params.idEstudiante;
+
+        const carreras = await obtenerCarrerasEstudiante(idEstudiante);
+
+        res.status(200).json({ carreras });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
+// Controlador para obtener las materias de un estudiante
+const obtenerMateriasEstudianteController = async (req, res) => {
+    try {
+        const idEstudiante = req.params.idEstudiante;
+
+        const materias = await obtenerMateriasEstudiante(idEstudiante);
+
+        res.status(200).json({ materias });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 
 module.exports = {
     buscarPorId,
     buscarTodos,
     eliminar,
     crear,
-    actualizar
+    actualizar,
+    obtenerCarrerasEstudianteController,
+    obtenerMateriasEstudianteController,
 }

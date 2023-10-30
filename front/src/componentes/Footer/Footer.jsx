@@ -39,10 +39,7 @@ function Footer() {
             </ul>
          </div>
       </footer>
-      <div className="integrantes">
-         <h5>Integrantes&nbsp;</h5>
-         <p>Facundo Jurado | Gonzalo Jurado | Maximiliano Jurado</p>
-      </div>
+
     </div>
   );
 }

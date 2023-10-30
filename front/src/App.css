@@ -539,9 +539,9 @@ nav .menu li a {
 }
 
 /* Header  Mobile */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   header {
-    position: fixed;
+
     z-index: 2147483647;
     width: 100%;
   }
@@ -1346,7 +1346,7 @@ button {
   background-color: #007bff;
   color: #fff;
   border: none;
-  padding: 10px 20px;
+  padding: 10px;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
@@ -1382,6 +1382,14 @@ h2 {
   padding: 10px;
   margin: 15px;
   width: 100%;
+}
+
+select.form-control{
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: right center;
+  border: 1px solid #ced4da;
+  padding: 1px;
 }
 
 
@@ -1440,5 +1448,7 @@ background-color: #f9f9f9;
 }
 
 
-
+h2{
+  margin: 10px 0;
+}
 

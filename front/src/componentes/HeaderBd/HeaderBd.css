@@ -18,6 +18,14 @@
   align-items: center;
 }
 
+@media (max-width: 1024px) {
+  .navbar {
+    flex-direction: column;
+    padding: 10px;
+    align-items: center;
+  }
+}
+
 .navbar-brand {
   color: rgb(208, 208, 208);
   font-size: 24px;
@@ -26,20 +34,37 @@
 
 .navbar-nav {
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
+
+.menu-BD ul li {
+  display: flex;
+  justify-content: space-between;
+}
+
 
 .nav-item {
   margin-right: 15px;
 }
 
 .nav-link {
+  font-size: 15px;
   color: #fff;
   transition: color 0.2s;
-  padding: 0 10px;
-  text-transform: uppercase;
-  font-weight: bold;
+  font-weight: 500;
 }
+
+@media (max-width: 1024px) {
+  .navbar-nav {
+    flex-direction: column;
+  }
+
+  .nav-link {
+    padding: 10px 0;
+  }
+}
+
 
 .nav-link:hover {
   color: #007bff;
@@ -92,7 +117,7 @@
 
 .card-img-top {
   max-width: 100%;
-  height: 200px; 
+  height: 200px;
   object-fit: cover;
 }
 
@@ -123,6 +148,9 @@
   border-radius: 0.25rem;
 }
 
+.user-bedelia {
+  font-size: 14px;
+}
 
 .btn-primary {
   color: #fff;
@@ -140,9 +168,159 @@
   margin-top: 2rem;
 }
 
-.matricular_container{
+.matricular_container, .matricular-carrera {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
 }
 
+.carreras-obtenidas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.carreras-bedel {
+  background-color: white;
+  padding: 10px;
+  margin: 5px;
+}
+
+.control {
+  font-family: arial;
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 5px;
+  padding-top: 3px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.control input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+.control_indicator {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background: #e6e6e6;
+  border: 0px solid #000000;
+  border-radius: 0px;
+}
+
+.control:hover input~.control_indicator,
+.control input:focus~.control_indicator {
+  background: #cccccc;
+}
+
+.control input:checked~.control_indicator {
+  background: #2aa1c0;
+}
+
+.control:hover input:not([disabled]):checked~.control_indicator,
+.control input:checked:focus~.control_indicator {
+  background: #0e6647;
+}
+
+.control input:disabled~.control_indicator {
+  background: #e6e6e6;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.control_indicator:after {
+  box-sizing: unset;
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.control input:checked~.control_indicator:after {
+  display: block;
+}
+
+.control-checkbox .control_indicator:after {
+  left: 8px;
+  top: 4px;
+  width: 3px;
+  height: 8px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.control-checkbox input:disabled~.control_indicator:after {
+  border-color: #7b7b7b;
+}
+
+.control-checkbox .control_indicator::before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin-left: -1.3rem;
+  margin-top: -1.3rem;
+  background: #2aa1c0;
+  border-radius: 3rem;
+  opacity: 0.6;
+  z-index: 99999;
+  transform: scale(0);
+}
+
+@keyframes s-ripple {
+  0% {
+    transform: scale(0);
+  }
+
+  20% {
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+@keyframes s-ripple-dup {
+  0% {
+    transform: scale(0);
+  }
+
+  30% {
+    transform: scale(1);
+  }
+
+  60% {
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+.control-checkbox input+.control_indicator::before {
+  animation: s-ripple 250ms ease-out;
+}
+
+.control-checkbox input:checked+.control_indicator::before {
+  animation-name: s-ripple-dup;
+}
+
+.checkbox-materias{
+  margin: 10px 0;
+}
+
+.matricular-carrera{
+  margin: 10px;
+}

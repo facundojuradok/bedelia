@@ -5,8 +5,9 @@ import {
   eliminarCarrera,
   editarCarrera,
 } from "../../services/carreras"
-import { obtenerMaterias } from "../../services/materias"
 import HeaderBedelia from "../HeaderBd/HeaderBd"
+import { obtenerMaterias } from "../../services/materias"
+import { obtenerMateriasDeCarrera, asignarMateriaACarrera } from "../../services/carreraMateria"
 
 
 function CarreraMateria() {
@@ -14,6 +15,25 @@ function CarreraMateria() {
   const [materias, setMaterias] = useState([])
   const [estaEditando, setEstaEditando] = useState({})
   const formRef = useRef(null)
+
+  const agregarMateriaCarrera = async (e) => {
+    e.preventDefault();
+
+    const idMateria = e.target.nombreMateria.value;
+    const idCarrera = e.target.carreraPerteneciente.value;
+
+    try {
+      await asignarMateriaACarrera(idMateria, idCarrera);
+      console.log("Materia asignada");
+
+      obtenerCarreras().then(async (carreras) => {
+        setCarreras(carreras);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 
   const agregarCarrera = async (e) => {
     e.preventDefault()
@@ -71,13 +91,7 @@ function CarreraMateria() {
   }
 
   const manejarEditar = async (e, carrera) => {
-    console.log("Click al boton editar")
-    console.log("Ejecutamos la funcion manejarEditar")
-    console.log("Nos llega por paramtros la carrera a editar")
-    console.log("Seteamos el estado de estaEditando con la carrera a editar")
-    console.log(
-      "Seteamos el valor del input con el nombre de la carrera usando la referencia al formulario con el hook useRef"
-    )
+
     setEstaEditando({
       status: true,
       id: carrera.idCarrera,
@@ -85,17 +99,16 @@ function CarreraMateria() {
     formRef.current.nombre.value = carrera.nombre
   }
 
+
   useEffect(() => {
     // Obtener carreras
-    obtenerCarreras().then((carrerasObtenidas) => {
-      console.log(carrerasObtenidas)
-      setCarreras(carrerasObtenidas.dato)
+    obtenerCarreras().then(async (carreras) => {
+      setCarreras(carreras)
     })
 
-    // Obtener materias
-    obtenerMaterias().then((materiasObtenidas) => {
-      console.log(materiasObtenidas)
-      setMaterias(materiasObtenidas.dato)
+    obtenerMaterias().then((res) => {
+      const { dato: materias } = res
+      setMaterias(materias)
     })
   }, [])
 
@@ -156,21 +169,9 @@ function CarreraMateria() {
                   className="form-control"
                   name="nombre"
                   required
+                  placeholder="Nombre de la materia"
                 />
-                <label htmlFor="carreraPerteneciente">
-                  Seleccione la Carrera:
-                </label>
-                <select
-                  className="form-control"
-                  id="carreraPerteneciente"
-                  required
-                >
-                  {carreras.map((carrera) => (
-                    <option key={carrera.idCarrera} value={carrera.idCarrera}>
-                      {carrera.nombre}
-                    </option>
-                  ))}
-                </select>
+
               </div>
               <div className="form-group">
                 <input
@@ -196,6 +197,43 @@ function CarreraMateria() {
 
               <button type="submit" className="btn btn-primary">
                 Guardar Materia
+              </button>
+            </form>
+          </div>
+
+          <div className="mt-4">
+            <h2>Asignar materias a carreras</h2>
+            <form id="materiaForm" onSubmit={agregarMateriaCarrera}>
+              <div className="form-group">
+                <select name="nombreMateria" id="nombreMateria">
+                  <option value="" disabled selected />
+                  {
+                    materias.map((materia) => (
+                      <option key={materia.idMateria} value={materia.idMateria}>
+                        {materia.nombre}
+                      </option>
+                    ))}
+                </select>
+                <label htmlFor="carreraPerteneciente">
+                  Seleccione la Carrera:
+                </label>
+                <select
+                  className="form-control"
+                  id="carreraPerteneciente"
+                  name="carreraPerteneciente"
+                  required
+                >
+                  {carreras.map((carrera) => (
+                    <option key={carrera.idCarrera} value={carrera.idCarrera}>
+                      {carrera.nombre}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+
+              <button type="submit" className="btn btn-primary">
+                Guardar Cambios
               </button>
             </form>
           </div>
@@ -236,9 +274,12 @@ function CarreraMateria() {
                     Materias de {carrera.nombre}
                   </h4>
                   <ul>
-                    {materias.map((materia) => (
-                      <li key={materia.idMateria}> - {materia.nombre}</li>
-                    ))}
+                    {carrera.materias && Array.isArray(carrera.materias) && carrera.materias.length > 0 ?
+                      carrera.materias.map((materia) => (
+                        <li key={materia.idMateria}>{materia}</li>
+                      )) : (<p>No hay materias asignadas</p>)}
+
+
                   </ul>
                   <br />
                   <hr />

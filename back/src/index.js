@@ -48,6 +48,9 @@ const v1Materias = require('./v1/rutas/materias');
 const v1Registro = require('./v1/rutas/registro');
 const v1Login = require('./v1/rutas/login');
 const v1Logout = require('./v1/rutas/logout');
+const v1CarrerasMateria = require('./v1/rutas/carrerasMaterias');
+const v1Matricular = require('./v1/rutas/matricular');
+
 
 
 app.use('/api/v1/publico', v1Publico);
@@ -57,6 +60,9 @@ app.use('/api/v1/materias', v1Materias);
 app.use('/api/v1/registro', v1Registro);
 app.use('/api/v1/login', v1Login);
 app.use('/api/v1/logout', v1Logout);
+app.use('/api/v1/carrerasMaterias', v1CarrerasMateria);
+app.use('/api/v1/matricular', v1Matricular);
+
 
 
 app.listen(process.env.PUERTO, ()=>{

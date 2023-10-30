@@ -10,3 +10,13 @@ export const obtenerMaterias = async () => {
     }
 }
 
+export const obtenerMateriaPorId = async (idMateria) => {
+    try {
+        const response = await fetch(`${API_URL}/materias/materias/${idMateria}`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error)
+    }
+}
+
